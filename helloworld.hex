@@ -1,0 +1,68 @@
+# =====================================================================
+# ELF64 HEADER  (64 bytes)
+# =====================================================================
+7f 45 4c 46                      # e_ident: 0x7F 'E' 'L' 'F'
+02                               # EI_CLASS = ELFCLASS64
+01                               # EI_DATA  = little-endian
+01                               # EI_VERSION = EV_CURRENT
+00                               # EI_OSABI = System V
+00                               # EI_ABIVERSION
+00 00 00 00 00 00 00             # padding (7 bytes)
+
+02 00                            # e_type    = ET_EXEC
+3e 00                            # e_machine = EM_X86_64
+01 00 00 00                      # e_version = EV_CURRENT
+
+78 00 40 00 00 00 00 00          # e_entry = 0x400078 (entry point)
+40 00 00 00 00 00 00 00          # e_phoff = 64 (program header starts immediately after ELF header)
+00 00 00 00 00 00 00 00          # e_shoff = 0 (no section table)
+00 00 00 00                      # e_flags
+
+40 00                            # e_ehsize = 64 bytes
+38 00                            # e_phentsize = 56 bytes
+01 00                            # e_phnum = 1 program header
+00 00                            # e_shentsize = 0
+00 00                            # e_shnum = 0
+00 00                            # e_shstrndx = 0
+
+# =====================================================================
+# PROGRAM HEADER (56 bytes)
+# =====================================================================
+01 00 00 00                      # p_type = PT_LOAD
+05 00 00 00                      # p_flags = PF_R | PF_X
+00 00 00 00 00 00 00 00          # p_offset = 0 (segment begins at file start)
+00 00 40 00 00 00 00 00          # p_vaddr = 0x400000
+00 00 00 00 00 00 00 00          # p_paddr = ignored
+a0 00 00 00 00 00 00 00          # p_filesz = total file size (0xA0 = 160 bytes)
+a0 00 00 00 00 00 00 00          # p_memsz = same
+00 10 00 00 00 00 00 00          # p_align = 0x1000
+
+# =====================================================================
+# MACHINE CODE
+# =====================================================================
+
+# mov eax, 1         ; write syscall
+b8 01 00 00 00
+
+# mov edi, 1         ; fd = 1 (stdout)
+bf 01 00 00 00
+
+# lea rsi, [rip+0x10]  ; pointer to "Hello world!\n"
+48 8d 35 10 00 00 00
+
+# mov edx, 0x0d      ; message length = 13
+ba 0d 00 00 00
+
+# syscall
+0f 05
+
+# exit(0)
+b8 3c 00 00 00       # mov eax, 60
+33 ff                # xor edi, edi
+0f 05                # syscall
+
+# ---------------------------------------------------------------------
+# INLINE "Hello world!\n"
+# ---------------------------------------------------------------------
+48 65 6c 6c 6f 20 77 6f 72 6c 64 21 0a
+
