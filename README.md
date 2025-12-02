@@ -13,13 +13,9 @@ The dump I ended up with contains:
 
 All of that fits into **166 bytes** of final binary (which is actually... kinda a lot).
 
----
-
 ## Things I’ve learned
 
 x86-64 machine code is basically a museum of hacks. As new instruction sets, addressing modes, and 64-bit support piled on top of the old 32-bit world, the ISA became... let’s say _character-rich_. Not exactly a fan.
-
----
 
 ## Recommended reading
 
