@@ -24,7 +24,7 @@ To make sense of what’s going on in the code:
 ### • Endianness
 
 x86 is **little-endian**.  
-So the literal value `0xbacd` is stored as `cd ba` in memory and registers.
+So the literal value `0xbacd` is stored as `cd ba` in memory.
 
 ### • ELF format
 
